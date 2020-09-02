@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    app:layout_constraintTop_toBottomOf="@+id/meal_img"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/add_recipe_gradient">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="15dp"
+        android:paddingTop="30dp"
+        android:id="@+id/constraint1"
+        android:background="@drawable/round_corners_new_recipe">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_et"
+        android:background="@drawable/edit_text_design"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="Recipe Title"
+        android:textSize="15sp"
+        android:fontFamily="@font/nunito_regular"
+        android:textColor="@color/dark"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredients_et"
+        android:background="@drawable/edit_text_design"
+        app:layout_constraintTop_toBottomOf="@id/title_et"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:inputType="textMultiLine"
+        android:textColor="@color/dark"
+        android:hint="Ingredients"
+        android:textSize="15sp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:fontFamily="@font/nunito_regular"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/instructions_et"
+        android:background="@drawable/edit_text_design"
+        app:layout_constraintTop_toBottomOf="@id/ingredients_et"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:inputType="textMultiLine"
+        android:textColor="@color/dark"
+        android:hint="Instructions"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:fontFamily="@font/nunito_regular"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/save_cancel"
+            app:layout_constraintTop_toBottomOf="@id/instructions_et"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="45dp"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="25dp">
+            <ImageButton
+                android:layout_width="120dp"
+                android:layout_height="44dp"
+                android:id="@+id/cancel_btn"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/cancel_btn"
+                />
+        <ImageButton
+            android:layout_width="120dp"
+            android:layout_height="44dp"
+            android:id="@+id/save_btn"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/save_btn"
+            />
+        </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+

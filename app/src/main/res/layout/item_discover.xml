@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="131dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_card"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="87dp"
+            android:id="@+id/category_thumb"
+            android:scaleType="centerCrop"
+            android:alpha="0.85"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/category_thumb"
+            android:gravity="center"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:textSize="12sp"
+            android:textColor="#675a75"
+            android:alpha="0.7"
+            android:textAllCaps="true"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

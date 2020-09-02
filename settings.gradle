@@ -1,0 +1,2 @@
+rootProject.name='Recipely'
+include ':app'

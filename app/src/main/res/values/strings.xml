@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Recipely</string>
+    <string name="tv_1">Explore</string>
+    <string name="instructions">Instructions</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="your_meals">Your Meals</string>
+</resources>
