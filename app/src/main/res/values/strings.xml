@@ -4,4 +4,7 @@
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
     <string name="your_meals">Your Meals</string>
+    <string name="add">+</string>
+    <string name="title_hint">Recipe Title</string>
+    <string name="ingredients_hint">Ingredients</string>
 </resources>

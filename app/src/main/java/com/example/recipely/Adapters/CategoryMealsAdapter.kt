@@ -59,7 +59,6 @@ class CategoryMealsViewHolder(val v: View, var meal: Meal? = null): RecyclerView
             intent.putExtra(NAME_KEY, meal?.strMeal)
 
             v.context.startActivity(intent)
-            println("Holder meal id: " + meal?.idMeal)
         }
     }
 

@@ -25,7 +25,6 @@
         android:fontFamily="@font/nunito_regular"
         android:textSize="15sp"
         android:textAllCaps="true"
-        android:text="Palacinke"
         android:alpha="0.75"/>
 
 </FrameLayout>

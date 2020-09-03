@@ -23,28 +23,14 @@ class CategoryMealsActivity: AppCompatActivity() {
         back_btn.setOnClickListener {
             onBackPressed()
         }
-
         service = Client.client.create(Service::class.java)
 
         category_meals_recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        //item_title.animation = AnimationUtils.loadAnimation(this,R.anim.scale_big)
-
-        //category_meals_img.animation = AnimationUtils.loadAnimation(this, R.anim.scale_big)
         category_meals_text.animation = AnimationUtils.loadAnimation(this, R.anim.scale_big)
 
         val category = intent.getStringExtra(CategoryViewHolder.NAME_KEY)
         category_meals_text.text = category
-
-        /*if(category == "Breakfast" || category=="Goat")
-            category_meals_img.scaleType = ImageView.ScaleType.CENTER_CROP*/
-
-        val thumb = intent.getStringExtra(CategoryViewHolder.THUMB_KEY)
-        /*Picasso.get()
-            .load(thumb)
-            .fit().centerInside()
-            .error(android.R.drawable.stat_notify_error)
-            .into(category_meals_img)*/
 
         fetchMeals(category)
     }

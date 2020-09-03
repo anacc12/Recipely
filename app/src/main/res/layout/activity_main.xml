@@ -26,7 +26,7 @@
         android:background="@drawable/round_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="+"
+        android:text="@string/add"
         android:textColor="#8C4ED3"
         android:fontFamily="@font/nunito_black"
         android:textSize="19sp"
