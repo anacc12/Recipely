@@ -1,6 +1,7 @@
 package com.example.recipely.Adapters
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipely.*
 import com.example.recipely.Models.MealRecipes
 import com.example.recipely.Models.Recipe
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.item_category_meals.view.*
 import kotlinx.android.synthetic.main.item_custom_meal.view.*
 import kotlinx.android.synthetic.main.item_custom_meal.view.item_card
 import kotlinx.android.synthetic.main.item_discover.view.*
 
-class CustomMealsAdapter(private val recipes: MealRecipes): RecyclerView.Adapter<CustomMealsViewHolder>() {
+class CustomMealsAdapter(private val mealRecipes: MealRecipes): RecyclerView.Adapter<CustomMealsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomMealsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -23,14 +25,26 @@ class CustomMealsAdapter(private val recipes: MealRecipes): RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-        return recipes.recipes.count()
+        return mealRecipes.recipes.count()
     }
 
     override fun onBindViewHolder(holder: CustomMealsViewHolder, position: Int) {
-        val recipe = recipes.recipes[position]
+        val recipe = mealRecipes.recipes[position]
         holder.v.custom_meal_name.text = recipe.title
 
         holder.recipe = recipe
+    }
+
+    fun deleteItem(position: Int){
+        deleteFromDatabase(position)
+        mealRecipes.recipes.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    private fun deleteFromDatabase(position: Int){
+        val key = mealRecipes.recipes[position].id
+        val ref = FirebaseDatabase.getInstance().getReference("recipes")
+        ref.child(key).removeValue()
     }
 }
 

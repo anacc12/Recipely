@@ -1,31 +1,36 @@
 package com.example.recipely
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.recipely.Models.DiscoverRecycler
-import com.example.recipely.Models.MealRecipes
-import com.example.recipely.Models.Recipe
 import com.example.recipely.Adapters.CategoryAdapter
 import com.example.recipely.Adapters.CustomMealsAdapter
 import com.example.recipely.Api.Client
 import com.example.recipely.Api.Service
+import com.example.recipely.Models.DiscoverRecycler
+import com.example.recipely.Models.MealRecipes
+import com.example.recipely.Models.Recipe
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
     private var service : Service? = null
+    val recipes : MutableList<Recipe> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        recipes.clear()
         service = Client.client.create(Service::class.java)
 
         discover_recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         custom_meals_recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
 
         val ref = FirebaseDatabase.getInstance().getReference("recipes")
 
@@ -39,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        recipes.clear()
         val ref = FirebaseDatabase.getInstance().getReference("recipes")
         fetchRecipes(ref)
     }
@@ -69,12 +75,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchRecipes(ref: DatabaseReference){
-        val recipes : MutableList<Recipe> = ArrayList()
         val getData = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 println("Cancelled")
             }
-
             override fun onDataChange(p0: DataSnapshot) {
                 for(i in p0.children) {
                     val title = i.child("title").value.toString()
@@ -88,6 +92,8 @@ class MainActivity : AppCompatActivity() {
                         ingredients,
                         instructions
                     )
+
+                    if(!(recipes.any{ recipe -> key == recipe.id}))
                     recipes.add(recipe)
                 }
                 custom_meals_recycler.adapter = CustomMealsAdapter(
@@ -95,11 +101,19 @@ class MainActivity : AppCompatActivity() {
                         recipes
                     )
                 )
+
+                val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapter = CustomMealsAdapter(MealRecipes(recipes))))
+                itemTouchHelper.attachToRecyclerView(custom_meals_recycler)
+
                 }
             }
 
         ref.addListenerForSingleValueEvent(getData)
+
+
+
     }
+
 
 }
 
