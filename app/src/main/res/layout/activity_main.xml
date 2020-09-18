@@ -8,21 +8,65 @@
     tools:context=".MainActivity">
     <!--android:background="@drawable/main_bg"-->
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title_button_section"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/title_button_section_gradient">
+        android:background="@drawable/add_recipe_gradient">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="Log out"
+            android:textAllCaps="false"
+            android:alpha="0.75"
+            />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/search_icon"
+            android:background="@drawable/ic_search"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/logout"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:alpha="0.85"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/search"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/search_icon"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="Search"
+            android:textAllCaps="false"
+            android:alpha="0.75"
+            />
+
+
     <Button
         android:id="@+id/add_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/round_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +79,7 @@
 
     <TextView
         android:id="@+id/discover_tv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:paddingStart="30dp"
@@ -43,11 +87,27 @@
         android:text="@string/tv_1"
         android:fontFamily="@font/nunito_bold"
         android:textColor="@color/white"
-        android:translationY="-5dp"
+        android:translationY="10dp"
         android:textSize="17sp"
         android:textAllCaps="true"
         app:layout_constraintTop_toBottomOf="@id/add_button"
         app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/search_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingStart="30dp"
+            android:paddingBottom="80dp"
+            android:text="@string/tv_1"
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@color/white"
+            android:translationY="10dp"
+            android:textSize="17sp"
+            android:textAllCaps="true"
+            app:layout_constraintTop_toBottomOf="@id/add_button"
+            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -57,7 +117,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:scrollbars="none"
-        android:translationY="-70dp"
+        android:translationY="-60dp"
         android:background="@drawable/round_corners_main"
         android:paddingStart="3dp"
         android:paddingEnd="3dp"

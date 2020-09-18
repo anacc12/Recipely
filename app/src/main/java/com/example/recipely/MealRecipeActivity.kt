@@ -47,7 +47,6 @@ class MealRecipeActivity: AppCompatActivity() {
     }
 
     private fun fetchRecipe(id: String) {
-
         val call = service.fetchMealRecipe(id)
         call.enqueue(object: retrofit2.Callback<Recipes> {
 

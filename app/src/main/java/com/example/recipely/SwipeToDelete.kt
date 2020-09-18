@@ -4,7 +4,8 @@ import android.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipely.Adapters.CustomMealsAdapter
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SwipeToDelete(var adapter: CustomMealsAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     override fun onMove(
@@ -24,12 +25,10 @@ class SwipeToDelete(var adapter: CustomMealsAdapter): ItemTouchHelper.SimpleCall
         ) { dialog, _ ->
             val position: Int = viewHolder.adapterPosition
             adapter.deleteItem(position)
-            adapter.notifyDataSetChanged()
             dialog.dismiss()
         }
         alert.setNegativeButton("NO"
         ) { dialog, _ ->
-            adapter.notifyDataSetChanged()
             dialog.dismiss()
 
         }

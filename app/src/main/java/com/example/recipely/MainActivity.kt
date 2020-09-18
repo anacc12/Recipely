@@ -1,6 +1,7 @@
 package com.example.recipely
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,48 +12,57 @@ import com.example.recipely.Api.Service
 import com.example.recipely.Models.DiscoverRecycler
 import com.example.recipely.Models.MealRecipes
 import com.example.recipely.Models.Recipe
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
     private var service : Service? = null
-    val recipes : MutableList<Recipe> = mutableListOf()
+    private val recipes : MutableList<Recipe> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+        getCurrentUser()
         recipes.clear()
         service = Client.client.create(Service::class.java)
 
         discover_recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
         custom_meals_recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-
-        val ref = FirebaseDatabase.getInstance().getReference("recipes")
-
+        search.setOnClickListener{
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
         add_button.setOnClickListener {
             addNewRecipe()
         }
 
+        logout.setOnClickListener {
+            logout()
+        }
         fetchCategories()
-        fetchRecipes(ref)
+        fetchRecipes()
     }
 
     override fun onResume() {
         super.onResume()
         recipes.clear()
-        val ref = FirebaseDatabase.getInstance().getReference("recipes")
-        fetchRecipes(ref)
+        getCurrentUser()
+        fetchRecipes()
     }
 
     private fun fetchCategories(){
         val call = service?.fetchCategories()
         call?.enqueue(object: retrofit2.Callback<DiscoverRecycler> {
-
             override fun onResponse(call: retrofit2.Call<DiscoverRecycler>, response: retrofit2.Response<DiscoverRecycler>) {
                 if (response.isSuccessful) {
                     val categories = response.body()
@@ -74,47 +84,38 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun fetchRecipes(ref: DatabaseReference){
-        val getData = object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                println("Cancelled")
-            }
-            override fun onDataChange(p0: DataSnapshot) {
-                for(i in p0.children) {
-                    val title = i.child("title").value.toString()
-                    val ingredients = i.child("ingredients").value.toString()
-                    val instructions = i.child("instructions").value.toString()
-                    val key = i.key
-
-                    val recipe = Recipe(
-                        key!!,
-                        title,
-                        ingredients,
-                        instructions
-                    )
-
-                    if(!(recipes.any{ recipe -> key == recipe.id}))
-                    recipes.add(recipe)
-                }
-                custom_meals_recycler.adapter = CustomMealsAdapter(
-                    MealRecipes(
-                        recipes
-                    )
-                )
-
-                val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapter = CustomMealsAdapter(MealRecipes(recipes))))
-                itemTouchHelper.attachToRecyclerView(custom_meals_recycler)
-
-                }
-            }
-
-        ref.addListenerForSingleValueEvent(getData)
-
-
-
+    private fun getCurrentUser(){
+        val user = mAuth.currentUser
+        if (user != null) {
+            Log.d("MAIN ACTIVITY USER", user.uid)
+        }
     }
 
+    private fun fetchRecipes(){
+        val user = mAuth.currentUser
+        val titles: MutableList<String> = mutableListOf()
+        val ref = user?.uid?.let { firestore.collection("users").document(it).collection("recipes")}
+        ref?.get()?.addOnSuccessListener {
+        val list: MutableList<DocumentSnapshot> = it.documents
+            for(i in list){
+                val title = i.getString("title")
+                if (title != null) {
+                    titles.add(title)
+                }
+                Log.d("TITLE ", "$titles")
+            }
+            custom_meals_recycler.adapter = CustomMealsAdapter(titles)
+        }
+        val itemTouchHelper = ItemTouchHelper(SwipeToDelete(adapter = CustomMealsAdapter(titles)))
+        itemTouchHelper.attachToRecyclerView(custom_meals_recycler)
+    }
 
+    private fun logout(){
+        mAuth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
 
 

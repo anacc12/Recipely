@@ -17,4 +17,7 @@ interface Service {
     @GET("lookup.php")
     fun fetchMealRecipe(@Query("i") i: String): Call<Recipes>
 
+    @GET("search.php")
+    fun fetchMealByName(@Query("s") s: String): Call<Recipes>
+
 }

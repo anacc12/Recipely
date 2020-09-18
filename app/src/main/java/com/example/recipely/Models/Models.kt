@@ -2,7 +2,7 @@ package com.example.recipely.Models
 
 // iz baze
 class MealRecipes(val recipes: MutableList<Recipe>)
-class Recipe(val id: String, val title: String, val ingredients: String, val instructions: String)
+class Recipe(val title: String, val ingredients: String, val instructions: String)
 
 //sve kategorije
 class DiscoverRecycler(val categories: List<Category>)
